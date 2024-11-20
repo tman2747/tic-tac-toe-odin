@@ -1,12 +1,16 @@
-const Player = function (name, symbol){
+const Player = function (name, symbol)
+{
     this.name = name
     this.symbol = symbol
 }
 
-const Gameboard = function(){
-    this.gameBoardArray =  [[" 1"," 2"," 3"],["4 ","5 ","6 "],["7 ","8 ","9 "]]
-    this.displayBoard = function (){
-        this.gameBoardArray.forEach(Array => {
+const Gameboard = function ()
+{
+    this.gameBoardArray = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+    this.displayBoard = function ()
+    {
+        this.gameBoardArray.forEach(Array =>
+        {
             console.log(Array)
         });
     }
@@ -27,15 +31,58 @@ const Gameboard = function(){
     this.checkWin = function () 
     {
         // check for any column win
-
+        for (let i = 0; i <= this.gameBoardArray.length - 1; i++)
+        {
+            if (this.gameBoardArray[0][i] == this.gameBoardArray[0][i] && this.gameBoardArray[1][i] == this.gameBoardArray[0][i] && this.gameBoardArray[2][i] == this.gameBoardArray[0][i] && this.gameBoardArray[0][i] != " ")
+            {
+                return true
+            }
+        }
 
         // check for any row win
 
         // check for any diagonial win
-        for (let i = 0; i< this.gameBoardArray.length; i++)
+        let prevSymbol = this.gameBoardArray[0][0]
+        prevSymbol = this.gameBoardArray[0][0]
+
+        for (let i = 0; i <= this.gameBoardArray.length - 1; i++)
         {
-            console.log(this.gameBoardArray[i][i])
+            if (prevSymbol == " ")
+            {
+                break
+            }
+            if (this.gameBoardArray[i][i] === prevSymbol && i == this.gameBoardArray.length - 1)
+            {
+                return true
+            }
+            else if (this.gameBoardArray[i][i] != prevSymbol)
+            {
+                break
+            }
+            prevSymbol = this.gameBoardArray[i][i]
         }
+
+        let primaryIndex = 0
+        prevSymbol = this.gameBoardArray[0][this.gameBoardArray.length - 1]
+        for (let j = this.gameBoardArray.length - 1; j >= 0; j--)
+        {
+            if (prevSymbol == " ")
+            {
+                break
+            }
+            if (this.gameBoardArray[primaryIndex][j] == prevSymbol && j == 0)
+            {
+                return true
+            }
+            else if (this.gameBoardArray[primaryIndex][j] != prevSymbol)
+            {
+                break
+            }
+            // console.log(this.gameBoardArray[primaryIndex][j])
+            primaryIndex++
+        }
+
+        return false
         // next would be adding a loop that check [0][2] / [1][1] /[2][0]
         // if there is any win return the symbol in a winning condition. else return null or something else? 
     }
@@ -43,3 +90,4 @@ const Gameboard = function(){
 
 let gameboard = new Gameboard
 
+gameboard.checkWin()
