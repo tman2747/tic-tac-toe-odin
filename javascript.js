@@ -40,7 +40,13 @@ const Gameboard = function ()
         }
 
         // check for any row win
-
+        for (let i = 0; i <= this.gameBoardArray.length - 1; i++)
+            {
+                if (this.gameBoardArray[i][0] == this.gameBoardArray[i][0] && this.gameBoardArray[i][1] == this.gameBoardArray[i][0] && this.gameBoardArray[i][2] == this.gameBoardArray[i][0] && this.gameBoardArray[i][0] != " ")
+                {
+                    return true
+                }
+            }
         // check for any diagonial win
         let prevSymbol = this.gameBoardArray[0][0]
         prevSymbol = this.gameBoardArray[0][0]
