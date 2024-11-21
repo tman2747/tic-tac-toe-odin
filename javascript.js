@@ -6,7 +6,7 @@ const Player = function (name, symbol)
 
 const Gameboard = function ()
 {
-    this.gameBoardArray = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+    this.gameBoardArray = [["x", "X", "O"], ["O", "O", "X"], ["X", "X", "O"]]
     this.displayBoard = function ()
     {
         this.gameBoardArray.forEach(Array =>
@@ -27,6 +27,30 @@ const Gameboard = function ()
         }
 
     };
+
+    this.clearboard = function()
+    {
+        this.gameBoardArray = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]] // maybe use this function?
+    }
+
+    this.renderBoard = function()
+    {
+        let gameContainer = document.querySelector(".Tic-Tac-Toe-container")
+        gameContainer.innerHTML = ""
+
+        this.gameBoardArray.forEach(function (array,postion){
+            array.forEach(function (index,secondaryPostion){
+                let tile = document.createElement("div")
+                tile.className = "board"
+                tile.id = `tile-${postion}-${secondaryPostion}`
+                tile.innerHTML = index
+                gameContainer.appendChild(tile)
+                tile.addEventListener("click",function (e){
+                    console.log(e.target.innerHTML = "e")
+                })
+            })
+        })
+    }
 
     this.checkWin = function () 
     {
@@ -95,5 +119,4 @@ const Gameboard = function ()
 }
 
 let gameboard = new Gameboard
-
-gameboard.checkWin()
+gameboard.renderBoard()
