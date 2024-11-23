@@ -1,12 +1,51 @@
-const Player = function (name, symbol)
+const Player = function (symbol)
 {
-    this.name = name
-    this.symbol = symbol
+    this.name = null
+    this.symbol = symbol 
+
+    this.setname = function(name)
+    {
+        this.name = name
+    }
+
+    this.getPlayer = function()
+    {
+        let container = document.querySelector(".content")
+        
+        let getuser = document.createElement("div")
+        let inputfield = document.createElement("input")
+        inputfield.type = "text"
+        getuser.appendChild(inputfield)
+        console.log(getuser)
+
+
+    }
+
+    
 }
+
+const GameController = function ()
+{
+    this.gameBoard = new Gameboard
+    this.player1 = new Player
+    this.Player2 = new Player
+
+    this.init = function ()
+    {
+        this.player1.getPlayer("X")
+        this.Player2.getPlayer("O")
+        this.gameBoard.clearboard()
+        this.gameBoard.renderBoard()
+    }
+
+}
+
 
 const Gameboard = function ()
 {
     this.gameBoardArray = [["x", "X", "O"], ["O", "O", "X"], ["X", "X", "O"]]
+    this.currentSymbol = "X"
+
     this.displayBoard = function ()
     {
         this.gameBoardArray.forEach(Array =>
@@ -19,7 +58,7 @@ const Gameboard = function ()
     {
         if (this.gameBoardArray[array][postion] === " ")
         {
-            this.gameBoardArray[array][postion] = char
+            this.gameBoardArray[array][postion] = this.currentSymbol
         }
         else
         {
@@ -30,7 +69,7 @@ const Gameboard = function ()
 
     this.clearboard = function()
     {
-        this.gameBoardArray = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]] // maybe use this function?
+        this.gameBoardArray = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
     }
 
     this.renderBoard = function()
@@ -38,16 +77,20 @@ const Gameboard = function ()
         let gameContainer = document.querySelector(".Tic-Tac-Toe-container")
         gameContainer.innerHTML = ""
 
-        this.gameBoardArray.forEach(function (array,postion){
-            array.forEach(function (index,secondaryPostion){
+        this.gameBoardArray.forEach((array,postion)=>{
+            array.forEach((index,secondaryPostion)=>{
                 let tile = document.createElement("div")
                 tile.className = "board"
                 tile.id = `tile-${postion}-${secondaryPostion}`
                 tile.innerHTML = index
                 gameContainer.appendChild(tile)
-                tile.addEventListener("click",function (e){
-                    console.log(e.target.innerHTML = "e")
-                })
+                tile.addEventListener("click", function (){
+                    if (!this.checkWin()) // stops input when we have a win.
+                    {
+                        this.selectPostion("x",postion,secondaryPostion) // same thing here
+                        this.renderBoard() // this does not work. need to figure out a way to call this method within class. it is currently referecing the global gameboard
+                    }
+                }.bind(this))
             })
         })
     }
@@ -59,6 +102,7 @@ const Gameboard = function ()
         {
             if (this.gameBoardArray[0][i] == this.gameBoardArray[0][i] && this.gameBoardArray[1][i] == this.gameBoardArray[0][i] && this.gameBoardArray[2][i] == this.gameBoardArray[0][i] && this.gameBoardArray[0][i] != " ")
             {
+                console.log(`${this.gameBoardArray[0][i]} Is the winner`)
                 return true
             }
         }
@@ -118,5 +162,6 @@ const Gameboard = function ()
     }
 }
 
-let gameboard = new Gameboard
-gameboard.renderBoard()
+let gamecontroller = new GameController
+
+gamecontroller.init()
