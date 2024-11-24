@@ -10,15 +10,18 @@ const Player = function (symbol)
 
     this.getPlayer = function()
     {
-        let container = document.querySelector(".content")
+        let container = document.querySelector(".player-info")
         
-        let getuser = document.createElement("div")
+        let playerInput = document.createElement("div")
+        playerInput.className = "player-input"
+        let playerText = document.createElement("p")
+        playerText.innerHTML = "Player Name:"
+        playerInput.appendChild(playerText)
         let inputfield = document.createElement("input")
         inputfield.type = "text"
-        getuser.appendChild(inputfield)
-        console.log(getuser)
-
-
+        playerInput.appendChild(inputfield)
+        
+        container.appendChild(playerInput)
     }
 
     
@@ -34,6 +37,15 @@ const GameController = function ()
     {
         this.player1.getPlayer("X")
         this.Player2.getPlayer("O")
+        this.playRound()
+    }
+    this.restart = function ()
+    {
+
+    }
+
+    this.playRound = function ()
+    {
         this.gameBoard.clearboard()
         this.gameBoard.renderBoard()
     }
@@ -54,11 +66,24 @@ const Gameboard = function ()
         });
     }
 
+    this.switchsymbol = function()
+    {
+        if (this.currentSymbol === "X")
+        {
+            this.currentSymbol = "O"
+        }
+        else
+        {
+            this.currentSymbol = "X"
+        }
+    }
+
     this.selectPostion = function (char, array, postion) 
     {
         if (this.gameBoardArray[array][postion] === " ")
         {
             this.gameBoardArray[array][postion] = this.currentSymbol
+            this.switchsymbol()
         }
         else
         {
@@ -87,8 +112,8 @@ const Gameboard = function ()
                 tile.addEventListener("click", function (){
                     if (!this.checkWin()) // stops input when we have a win.
                     {
-                        this.selectPostion("x",postion,secondaryPostion) // same thing here
-                        this.renderBoard() // this does not work. need to figure out a way to call this method within class. it is currently referecing the global gameboard
+                        this.selectPostion("x",postion,secondaryPostion) // maybe move this out of the if so it checks win after the selection and just not render the board if it is a win.
+                        this.renderBoard()
                     }
                 }.bind(this))
             })
