@@ -47,8 +47,17 @@
 .player-input{
     display: flex;
     align-items: center;
+    gap: 20px;
 }
 
 .player-input input{
     height: 20px;
+}
+
+.player-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:  10px;
 }

@@ -1,30 +1,33 @@
 const Player = function (symbol)
 {
     this.name = null
-    this.symbol = symbol 
+    this.symbol = symbol
+    Player.prototype.playercount = 1
 
-    this.setname = function(name)
+    this.setname = function (name)
     {
         this.name = name
     }
 
-    this.getPlayer = function()
+    this.getPlayer = function ()
     {
         let container = document.querySelector(".player-info")
-        
+
         let playerInput = document.createElement("div")
         playerInput.className = "player-input"
         let playerText = document.createElement("p")
-        playerText.innerHTML = "Player Name:"
+        playerText.innerHTML = `Player ${Player.prototype.playercount}:`
         playerInput.appendChild(playerText)
         let inputfield = document.createElement("input")
         inputfield.type = "text"
         playerInput.appendChild(inputfield)
-        
+
         container.appendChild(playerInput)
+
+        Player.prototype.playercount++
     }
 
-    
+
 }
 
 const GameController = function ()
@@ -38,6 +41,21 @@ const GameController = function ()
         this.player1.getPlayer("X")
         this.Player2.getPlayer("O")
         this.playRound()
+        this.getPlayers()
+    }
+
+    this.getPlayers = function ()
+    {
+        let container = document.querySelector(".player-info")
+        let restart = document.createElement("button")
+        restart.innerHTML = "restart"
+
+        let play = document.createElement("button")
+        play.innerHTML = "Play"
+
+        container.appendChild(restart)
+        container.appendChild(play)
+
     }
     this.restart = function ()
     {
@@ -66,7 +84,7 @@ const Gameboard = function ()
         });
     }
 
-    this.switchsymbol = function()
+    this.switchsymbol = function ()
     {
         if (this.currentSymbol === "X")
         {
@@ -92,27 +110,30 @@ const Gameboard = function ()
 
     };
 
-    this.clearboard = function()
+    this.clearboard = function ()
     {
         this.gameBoardArray = [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
     }
 
-    this.renderBoard = function()
+    this.renderBoard = function ()
     {
         let gameContainer = document.querySelector(".Tic-Tac-Toe-container")
         gameContainer.innerHTML = ""
 
-        this.gameBoardArray.forEach((array,postion)=>{
-            array.forEach((index,secondaryPostion)=>{
+        this.gameBoardArray.forEach((array, postion) =>
+        {
+            array.forEach((index, secondaryPostion) =>
+            {
                 let tile = document.createElement("div")
                 tile.className = "board"
                 tile.id = `tile-${postion}-${secondaryPostion}`
                 tile.innerHTML = index
                 gameContainer.appendChild(tile)
-                tile.addEventListener("click", function (){
+                tile.addEventListener("click", function ()
+                {
                     if (!this.checkWin()) // stops input when we have a win.
                     {
-                        this.selectPostion("x",postion,secondaryPostion) // maybe move this out of the if so it checks win after the selection and just not render the board if it is a win.
+                        this.selectPostion("x", postion, secondaryPostion) // maybe move this out of the if so it checks win after the selection and just not render the board if it is a win.
                         this.renderBoard()
                     }
                 }.bind(this))
@@ -134,12 +155,12 @@ const Gameboard = function ()
 
         // check for any row win
         for (let i = 0; i <= this.gameBoardArray.length - 1; i++)
+        {
+            if (this.gameBoardArray[i][0] == this.gameBoardArray[i][0] && this.gameBoardArray[i][1] == this.gameBoardArray[i][0] && this.gameBoardArray[i][2] == this.gameBoardArray[i][0] && this.gameBoardArray[i][0] != " ")
             {
-                if (this.gameBoardArray[i][0] == this.gameBoardArray[i][0] && this.gameBoardArray[i][1] == this.gameBoardArray[i][0] && this.gameBoardArray[i][2] == this.gameBoardArray[i][0] && this.gameBoardArray[i][0] != " ")
-                {
-                    return true
-                }
+                return true
             }
+        }
         // check for any diagonial win
         let prevSymbol = this.gameBoardArray[0][0]
         prevSymbol = this.gameBoardArray[0][0]
