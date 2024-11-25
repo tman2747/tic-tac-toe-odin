@@ -49,17 +49,22 @@ const GameController = function ()
         let container = document.querySelector(".player-info")
         let restart = document.createElement("button")
         restart.innerHTML = "restart"
-
+        restart.addEventListener("click", ()=>{
+            this.restart()
+        })
         let play = document.createElement("button")
         play.innerHTML = "Play"
-
+        play.addEventListener("click", ()=>{
+            console.log("play clicked")
+        })
         container.appendChild(restart)
         container.appendChild(play)
 
     }
     this.restart = function ()
     {
-
+        this.gameBoard.clearboard()
+        this.gameBoard.renderBoard()
     }
 
     this.playRound = function ()
