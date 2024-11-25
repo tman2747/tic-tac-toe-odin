@@ -40,7 +40,6 @@ const GameController = function ()
     {
         this.player1.getPlayer("X")
         this.Player2.getPlayer("O")
-        this.playRound()
         this.getPlayers()
     }
 
@@ -55,7 +54,7 @@ const GameController = function ()
         let play = document.createElement("button")
         play.innerHTML = "Play"
         play.addEventListener("click", ()=>{
-            console.log("play clicked")
+            this.playRound()
         })
         container.appendChild(restart)
         container.appendChild(play)
