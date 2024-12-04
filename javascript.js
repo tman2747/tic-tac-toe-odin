@@ -54,6 +54,9 @@ const GameController = function ()
         let play = document.createElement("button")
         play.innerHTML = "Play"
         play.addEventListener("click", ()=>{
+            let playernames = document.querySelectorAll(".player-input")
+            this.player1.setname(playernames[0].lastChild.value)
+            this.Player2.setname(playernames[1].lastChild.value)
             this.playRound()
         })
         container.appendChild(restart)
@@ -86,6 +89,12 @@ const Gameboard = function ()
         {
             console.log(Array)
         });
+    }
+
+    this.gameover = function()
+    {
+        this.clearboard()
+        this.renderBoard()
     }
 
     this.switchsymbol = function ()
