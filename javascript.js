@@ -93,8 +93,7 @@ const Gameboard = function ()
 
     this.gameover = function()
     {
-        this.clearboard()
-        this.renderBoard()
+        console.log(`${this.player1.name} is the winner`)
     }
 
     this.switchsymbol = function ()
@@ -148,6 +147,11 @@ const Gameboard = function ()
                     {
                         this.selectPostion("x", postion, secondaryPostion) // maybe move this out of the if so it checks win after the selection and just not render the board if it is a win.
                         this.renderBoard()
+                        if (this.checkWin())
+                        {
+                            console.log(this.checkWin())
+                            this.gameover()
+                        }
                     }
                 }.bind(this))
             })
@@ -161,8 +165,7 @@ const Gameboard = function ()
         {
             if (this.gameBoardArray[0][i] == this.gameBoardArray[0][i] && this.gameBoardArray[1][i] == this.gameBoardArray[0][i] && this.gameBoardArray[2][i] == this.gameBoardArray[0][i] && this.gameBoardArray[0][i] != " ")
             {
-                console.log(`${this.gameBoardArray[0][i]} Is the winner`)
-                return true
+                return this.gameBoardArray[0][i]
             }
         }
 
@@ -171,7 +174,7 @@ const Gameboard = function ()
         {
             if (this.gameBoardArray[i][0] == this.gameBoardArray[i][0] && this.gameBoardArray[i][1] == this.gameBoardArray[i][0] && this.gameBoardArray[i][2] == this.gameBoardArray[i][0] && this.gameBoardArray[i][0] != " ")
             {
-                return true
+                return this.gameBoardArray[i][0] // change all these to return the winning postion
             }
         }
         // check for any diagonial win
@@ -186,7 +189,7 @@ const Gameboard = function ()
             }
             if (this.gameBoardArray[i][i] === prevSymbol && i == this.gameBoardArray.length - 1)
             {
-                return true
+                return this.gameBoardArray[i][i]
             }
             else if (this.gameBoardArray[i][i] != prevSymbol)
             {
@@ -205,7 +208,7 @@ const Gameboard = function ()
             }
             if (this.gameBoardArray[primaryIndex][j] == prevSymbol && j == 0)
             {
-                return true
+                return this.gameBoardArray[primaryIndex][j]
             }
             else if (this.gameBoardArray[primaryIndex][j] != prevSymbol)
             {
