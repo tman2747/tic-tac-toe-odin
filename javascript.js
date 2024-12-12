@@ -43,6 +43,14 @@ const GameController = function ()
         this.getPlayers()
     }
 
+    this.gameover = function()
+    {
+
+        console.log(`${this.player1.name} is the winner`)
+    }
+
+    events.on("gameOver", this.gameover.bind(this));
+
     this.getPlayers = function ()
     {
         let container = document.querySelector(".player-info")
@@ -89,11 +97,6 @@ const Gameboard = function ()
         {
             console.log(Array)
         });
-    }
-
-    this.gameover = function()
-    {
-        console.log(`${this.player1.name} is the winner`)
     }
 
     this.switchsymbol = function ()
@@ -149,8 +152,7 @@ const Gameboard = function ()
                         this.renderBoard()
                         if (this.checkWin())
                         {
-                            console.log(this.checkWin())
-                            this.gameover()
+                            events.emit("gameOver")
                         }
                     }
                 }.bind(this))
@@ -223,6 +225,34 @@ const Gameboard = function ()
         // if there is any win return the symbol in a winning condition. else return null or something else? 
     }
 }
+
+
+//events - a super-basic Javascript (publish subscribe) pattern
+
+var events = {
+    events: {},
+    on: function (eventName, fn) {
+      this.events[eventName] = this.events[eventName] || [];
+      this.events[eventName].push(fn);
+    },
+    off: function(eventName, fn) {
+      if (this.events[eventName]) {
+        for (var i = 0; i < this.events[eventName].length; i++) {
+          if (this.events[eventName][i] === fn) {
+            this.events[eventName].splice(i, 1);
+            break;
+          }
+        };
+      }
+    },
+    emit: function (eventName, data) {
+      if (this.events[eventName]) {
+        this.events[eventName].forEach(function(fn) {
+          fn(data);
+        });
+      }
+    }
+  };
 
 let gamecontroller = new GameController
 
