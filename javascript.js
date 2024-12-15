@@ -34,19 +34,25 @@ const GameController = function ()
 {
     this.gameBoard = new Gameboard
     this.player1 = new Player
-    this.Player2 = new Player
+    this.player2 = new Player
 
     this.init = function ()
     {
         this.player1.getPlayer("X")
-        this.Player2.getPlayer("O")
+        this.player2.getPlayer("O")
         this.getPlayers()
     }
 
-    this.gameover = function()
+    this.gameover = function(winner)
     {
-
-        console.log(`${this.player1.name} is the winner`)
+        if (winner == 'X')
+        {
+            console.log(`${this.player1.name} is the winner`)
+        }
+        else
+        {
+            console.log(`${this.player2.name} is the winner`)
+        }
     }
 
     events.on("gameOver", this.gameover.bind(this));
@@ -64,7 +70,7 @@ const GameController = function ()
         play.addEventListener("click", ()=>{
             let playernames = document.querySelectorAll(".player-input")
             this.player1.setname(playernames[0].lastChild.value)
-            this.Player2.setname(playernames[1].lastChild.value)
+            this.player2.setname(playernames[1].lastChild.value)
             this.playRound()
         })
         container.appendChild(restart)
@@ -152,7 +158,7 @@ const Gameboard = function ()
                         this.renderBoard()
                         if (this.checkWin())
                         {
-                            events.emit("gameOver")
+                            events.emit("gameOver",this.checkWin())
                         }
                     }
                 }.bind(this))
