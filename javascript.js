@@ -1,6 +1,6 @@
 const Player = function (symbol)
 {
-    this.name = null
+    this.name = ""
     this.symbol = symbol
     Player.prototype.playercount = 1
 
@@ -71,6 +71,9 @@ const GameController = function ()
         {
         let wincontainer = document.querySelector(".win-message")// to clear the winning message
         wincontainer.innerHTML = ""// to clear the winning message
+        let playernames = document.querySelectorAll(".player-input")
+        this.player1.setname(playernames[0].lastChild.value)
+        this.player2.setname(playernames[1].lastChild.value)
             this.restart()
         })
         let play = document.createElement("button")
