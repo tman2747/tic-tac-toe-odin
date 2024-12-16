@@ -61,3 +61,12 @@
     justify-content: center;
     gap:  10px;
 }
+
+.win-message{
+    color: blue;
+    font-size: 80px;
+    margin-top: 0px;
+}
+.win-message p{
+    margin-top: 30px;
+}

@@ -43,16 +43,21 @@ const GameController = function ()
         this.getPlayers()
     }
 
-    this.gameover = function(winner)
+    this.gameover = function (winner)
     {
+        let wincontainer = document.querySelector(".win-message")
+        wincontainer.innerHTML = ""
+        let winmessage = document.createElement("p")
         if (winner == 'X')
         {
-            console.log(`${this.player1.name} is the winner`)
+            winmessage.innerHTML = `${this.player1.name} is the winner`
         }
         else
         {
-            console.log(`${this.player2.name} is the winner`)
+            winmessage.innerHTML = `${this.player2.name} is the winner`
         }
+
+        wincontainer.appendChild(winmessage)
     }
 
     events.on("gameOver", this.gameover.bind(this));
@@ -62,12 +67,14 @@ const GameController = function ()
         let container = document.querySelector(".player-info")
         let restart = document.createElement("button")
         restart.innerHTML = "restart"
-        restart.addEventListener("click", ()=>{
+        restart.addEventListener("click", () =>
+        {
             this.restart()
         })
         let play = document.createElement("button")
         play.innerHTML = "Play"
-        play.addEventListener("click", ()=>{
+        play.addEventListener("click", () =>
+        {
             let playernames = document.querySelectorAll(".player-input")
             this.player1.setname(playernames[0].lastChild.value)
             this.player2.setname(playernames[1].lastChild.value)
@@ -158,7 +165,7 @@ const Gameboard = function ()
                         this.renderBoard()
                         if (this.checkWin())
                         {
-                            events.emit("gameOver",this.checkWin())
+                            events.emit("gameOver", this.checkWin())
                         }
                     }
                 }.bind(this))
@@ -237,28 +244,36 @@ const Gameboard = function ()
 
 var events = {
     events: {},
-    on: function (eventName, fn) {
-      this.events[eventName] = this.events[eventName] || [];
-      this.events[eventName].push(fn);
+    on: function (eventName, fn)
+    {
+        this.events[eventName] = this.events[eventName] || [];
+        this.events[eventName].push(fn);
     },
-    off: function(eventName, fn) {
-      if (this.events[eventName]) {
-        for (var i = 0; i < this.events[eventName].length; i++) {
-          if (this.events[eventName][i] === fn) {
-            this.events[eventName].splice(i, 1);
-            break;
-          }
-        };
-      }
+    off: function (eventName, fn)
+    {
+        if (this.events[eventName])
+        {
+            for (var i = 0; i < this.events[eventName].length; i++)
+            {
+                if (this.events[eventName][i] === fn)
+                {
+                    this.events[eventName].splice(i, 1);
+                    break;
+                }
+            };
+        }
     },
-    emit: function (eventName, data) {
-      if (this.events[eventName]) {
-        this.events[eventName].forEach(function(fn) {
-          fn(data);
-        });
-      }
+    emit: function (eventName, data)
+    {
+        if (this.events[eventName])
+        {
+            this.events[eventName].forEach(function (fn)
+            {
+                fn(data);
+            });
+        }
     }
-  };
+};
 
 let gamecontroller = new GameController
 
