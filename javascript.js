@@ -69,12 +69,16 @@ const GameController = function ()
         restart.innerHTML = "restart"
         restart.addEventListener("click", () =>
         {
+        let wincontainer = document.querySelector(".win-message")// to clear the winning message
+        wincontainer.innerHTML = ""// to clear the winning message
             this.restart()
         })
         let play = document.createElement("button")
         play.innerHTML = "Play"
         play.addEventListener("click", () =>
         {
+        let wincontainer = document.querySelector(".win-message") // to clear thee winning message
+        wincontainer.innerHTML = "" // to clear the winning message
             let playernames = document.querySelectorAll(".player-input")
             this.player1.setname(playernames[0].lastChild.value)
             this.player2.setname(playernames[1].lastChild.value)
